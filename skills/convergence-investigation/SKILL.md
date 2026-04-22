@@ -222,12 +222,20 @@ The visualization is what turns the JSON graph and Markdown report into somethin
 
 ## When NOT to Use This Skill
 
-- A single quick lookup ("what year was Company X founded?") — just answer
-- A clarifying question about an existing finding — answer from memory or graph
-- A purely creative or generative task (writing a poem, building a dashboard UI from scratch)
-- A task that genuinely needs only one sub-method — call that sub-method's skill directly
-- When the user explicitly says "just X" or "no graph update needed" — respect the scoping
-- Investigations of individuals who have not consented to being researched and are not subjects of legitimate journalism, legal process, or self-OSINT — the methodology is rigorous but does not override basic privacy ethics
+- **Single-point lookups**: "what year was Company X founded?" — answer directly
+- **Clarifying existing findings**: Answer from memory or graph without re-running full pipeline
+- **Purely creative/generative tasks**: Writing poems, building UI from scratch — not supported
+- **Single-sub-method needs**: If only one method is needed (e.g., only document parsing), call that sub-method directly
+- **Explicit scoping requests**: When user says "just X" or "no graph update needed" — respect constraints
+- **Non-consented research**: Individuals who haven't consented to being researched, outside legitimate journalism/legal process/self-OSINT
+- **Low-confidence triggers**: Vague queries like "tell me about X" without context — ask for clarification first
+- **Peripheral targets**: When user provides only a name with no stated connection to their research goals
+- **Time-sensitive decisions**: Real-time decisions requiring immediate response — methodology is for deep investigation
+
+### Enhanced Conditions (v2.0+)
+- **Avoid over-chaining**: Do not trigger all 6 sub-methods for simple queries
+- **Respect privacy boundaries**: Personal knowledge (Phase 2.5) must not auto-promote to graph without explicit consent
+- **No speculative graph updates**: Never add "medium" or "low" confidence nodes to the knowledge graph
 
 ---
 

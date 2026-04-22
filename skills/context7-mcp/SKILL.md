@@ -14,6 +14,14 @@ Activate this skill when the user:
 - Needs API references ("What are the Supabase auth methods?")
 - Mentions specific frameworks (React, Vue, Svelte, Express, Tailwind, etc.)
 
+## When NOT to Use This Skill
+
+- **Simple version lookups**: "What version of React is latest" — use package registry instead
+- **Basic syntax questions**: Questions about JavaScript/TypeScript fundamentals — answer from knowledge
+- **Single function docs**: If only one method/function is asked about and Context7 would return the same — direct answer is sufficient
+- **No framework context**: When user asks about generic web dev concepts without specific library mentions
+- **Out-of-scope tools**: Questions about non-documentation topics (deployment, debugging, general programming)
+
 ## How to Fetch Documentation
 
 ### Step 1: Resolve the Library ID
@@ -28,8 +36,8 @@ Call `resolve-library-id` with:
 From the resolution results, choose based on:
 
 - Exact or closest name match to what the user asked for
-- Higher benchmark scores indicate better documentation quality
-- If the user mentioned a version (e.g., "React 19"), prefer version-specific IDs
+- **Higher benchmark scores indicate better documentation quality**
+- **If the user mentioned a version (e.g., "React 19"), prefer version-specific IDs**
 
 ### Step 3: Fetch the Documentation
 
@@ -46,8 +54,6 @@ Incorporate the fetched documentation into your response:
 - Include relevant code examples from the docs
 - Cite the library version when relevant
 
-## Guidelines
+## Implementation Notes
 
-- **Be specific**: Pass the user's full question as the query for better results
-- **Version awareness**: When users mention versions ("Next.js 15", "React 19"), use version-specific library IDs if available from the resolution step
-- **Prefer official sources**: When multiple matches exist, prefer official/primary packages over community forks
+This skill integrates with Context7's MCP server. The Context7 API key must be available as `CONTEXT7_API_KEY` in the environment before activation. For the devcontainer setup, forward this via `remoteEnv` in your MCP client configuration.

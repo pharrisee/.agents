@@ -9,8 +9,28 @@ Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej
 
 **Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks (simple typo fixes, obvious one-liners), use judgment — not every change needs the full rigor.
 
-## 1. Think Before Coding
+## When to Use This Skill
 
+- Complex coding tasks requiring systematic planning
+- Debugging intricate issues needing structured approach
+- Architecture decisions with multiple trade-offs
+- Code review and improvement scenarios
+- Learning new patterns or paradigms
+
+## When NOT to Use This Skill
+
+- **Simple typo fixes**: Obvious corrections (spelling, syntax errors)
+- **One-liner solutions**: Single-line fixes or straightforward implementations
+- **Already-working code**: No need for analysis if code is functioning correctly
+- **Trivial refactors**: Renaming variables without logic changes
+- **Copy-paste tasks**: Repetitive code with no customization needed
+- **Time-critical debugging**: Production incidents requiring immediate fixes
+- **Opinion-based preferences**: Style debates without technical impact
+- **Documentation-only changes**: Non-code modifications (comments, README)
+
+## Core Guidelines
+
+### 1. Think Before Coding
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
 
 Before implementing:
@@ -19,8 +39,7 @@ Before implementing:
 - If a simpler approach exists, say so. Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
-## 2. Simplicity First
-
+### 2. Simplicity First
 **Minimum code that solves the problem. Nothing speculative.**
 
 - No features beyond what was asked.
@@ -29,50 +48,19 @@ Before implementing:
 - No error handling for impossible scenarios.
 - If you write 200 lines and it could be 50, rewrite it.
 
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+## Implementation Notes
 
-## 3. Surgical Changes
+These guidelines are heuristics, not rules. Use professional judgment. The bias toward caution prevents common but hard-to-debug errors, but should not paralyze action on clear, simple tasks.
 
-**Touch only what you must. Clean up only your own mess.**
+## Quality Checks
 
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it — don't delete it.
+Before implementing, ask:
+1. Can this be solved with existing code?
+2. What are the assumptions I'm making?
+3. What's the simplest solution that works?
+4. What edge cases actually matter?
+5. Can I verify this with a test?
 
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
+## Related Context
 
-The test: Every changed line should trace directly to the user's request.
-
-## 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
-
-## How to Know It's Working
-
-These guidelines are working if:
-- Fewer unnecessary changes in diffs — only requested changes appear
-- Fewer rewrites due to overcomplication — code is simple the first time
-- Clarifying questions come before implementation — not after mistakes
-- Clean, minimal PRs — no drive-by refactoring or "improvements"
-
-## Examples
-
-For detailed code examples of each principle (what LLMs do wrong vs. what they should do), see [`examples.md`](examples.md) in this directory.
+These guidelines complement the broader agent framework but should not override domain-specific best practices or project conventions.
