@@ -1,5 +1,5 @@
 ---
-name: convergence-investigation-2
+name: convergence-investigation
 description: WFGY-enhanced end-to-end multi-method investigatory pipeline for cross-domain research. Adds WFGY framework integration: role-context tension scoring for bridge-figures, holographic validation for graph updates, tension tier formalism, and S-class taxonomy for structural parallels. Maintains rigorous epistemic-tier discipline while formalizing analyst intuition through quantitative metrics. Use for investigations requiring enhanced pattern recognition and cross-investigation learning.
 version: 2.0.0
 author: Enhanced from base convergence-investigation
