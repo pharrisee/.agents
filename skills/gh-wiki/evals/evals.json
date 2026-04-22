@@ -1,0 +1,175 @@
+{
+  "skill_name": "llm-wiki",
+  "description": "Test cases for evaluating llm-wiki skill activation and output quality",
+  "evals": [
+    {
+      "id": 1,
+      "name": "bootstrap_trigger",
+      "prompt": "Initialize an llm wiki for my research notes",
+      "expected_behavior": "Skill activates and offers to bootstrap at ~/wiki",
+      "assertions": [
+        "Offers to create wiki at default location ~/wiki",
+        "Lists directory structure to be created",
+        "Mentions SCHEMA.md"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "bootstrap_custom_path",
+      "prompt": "Create a new wiki at ~/projects/ai-research-wiki",
+      "expected_behavior": "Skill bootstraps at specified custom path",
+      "assertions": [
+        "Creates wiki at ~/projects/ai-research-wiki",
+        "Creates all required directories (raw/, sources/, concepts/, etc.)",
+        "Writes valid SCHEMA.md"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "capture_url_trigger",
+      "prompt": "Capture this article: https://example.com/article-about-transformers",
+      "expected_behavior": "Skill activates capture workflow",
+      "assertions": [
+        "Generates source ID (SRC-YYYY-MM-DD-NNN format)",
+        "Creates raw packet directory",
+        "Creates source page in sources/"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "capture_file",
+      "prompt": "Add this PDF to my wiki: ~/Downloads/research-paper.pdf",
+      "expected_behavior": "Captures file as new source",
+      "assertions": [
+        "Copies original to raw/sources/SRC-.../original/",
+        "Creates extracted.md with text content",
+        "Creates source page with file metadata"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "integrate_trigger",
+      "prompt": "Integrate the source I just captured",
+      "expected_behavior": "Skill activates integrate workflow",
+      "assertions": [
+        "Reads most recent source page",
+        "Identifies integration targets (concepts, entities)",
+        "Creates or updates canonical pages",
+        "Updates source status to 'integrated'"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "query_simple",
+      "prompt": "What does my wiki say about attention mechanisms?",
+      "expected_behavior": "Searches wiki and synthesizes answer",
+      "assertions": [
+        "Searches sources/, concepts/, syntheses/",
+        "Returns answer with citations [[sources/SRC-...]]",
+        "Does NOT file analysis unless explicitly asked"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "query_file_analysis",
+      "prompt": "Answer this question and save it: What are the tradeoffs between transformers and RNNs?",
+      "expected_behavior": "Queries wiki AND files result as analysis",
+      "assertions": [
+        "Synthesizes answer with citations",
+        "Creates analyses/transformers-vs-rnns.md (or similar)",
+        "Uses analysis page template"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "audit_trigger",
+      "prompt": "Audit my wiki health",
+      "expected_behavior": "Activates audit workflow",
+      "assertions": [
+        "Checks for broken links",
+        "Lists orphan pages",
+        "Identifies stale content",
+        "Writes report to meta/lint-report.md"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "citation_format",
+      "prompt": "Integrate this source and update the attention concept page",
+      "expected_behavior": "Integration uses proper citation format",
+      "assertions": [
+        "Citations use [[sources/SRC-YYYY-MM-DD-NNN]] format",
+        "NOT [[raw/sources/...]]",
+        "Citations placed near factual claims"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "non_editable_protection",
+      "prompt": "Edit the file meta/registry.json to add a new entry",
+      "expected_behavior": "Skill refuses to edit machine-owned files",
+      "assertions": [
+        "Declines to edit meta/ files directly",
+        "Suggests triggering metadata rebuild instead",
+        "References Non-Negotiable Rules"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "multi_source_integration",
+      "prompt": "I just captured 3 sources about LLM training. Integrate them all.",
+      "expected_behavior": "Integrates multiple sources sequentially",
+      "assertions": [
+        "Processes all 3 sources",
+        "Creates synthesis if sources conflict",
+        "Marks all 3 as 'integrated'",
+        "Triggers single metadata rebuild at end"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "conflicting_sources",
+      "prompt": "This new source contradicts what I already have in the wiki about scaling laws",
+      "expected_behavior": "Preserves uncertainty, doesn't overwrite",
+      "assertions": [
+        "Notes tension in synthesis page",
+        "Does not silently overwrite existing claims",
+        "Presents both views with citations",
+        "May mark status: contested"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "search_before_create",
+      "prompt": "Create a new concept page called 'Attention Mechanism'",
+      "expected_behavior": "Checks for existing page first",
+      "assertions": [
+        "Checks meta/registry.json first",
+        "If exists: offers to update instead",
+        "If not exists: creates new page"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "orphan_handling",
+      "prompt": "The audit found an orphan page. What should I do?",
+      "expected_behavior": "Suggests ways to connect orphan",
+      "assertions": [
+        "Explains what an orphan is (no incoming links)",
+        "Suggests pages that could link to it",
+        "Does not auto-delete content"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "folder_structure_compliance",
+      "prompt": "Bootstrap a wiki and show me the structure",
+      "expected_behavior": "Creates correct flat structure",
+      "assertions": [
+        "sources/, concepts/, entities/ are direct children of wiki/",
+        "NOT wiki/wiki/sources/ (no double nesting)",
+        "raw/ and meta/ at top level"
+      ]
+    }
+  ]
+}

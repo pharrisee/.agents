@@ -1,0 +1,40 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-04-17T22:10:46.611Z",
+      "updatedAt": "2026-04-17T22:10:46.611Z"
+    },
+    "gomponents": {
+      "source": "maragudk/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/maragudk/skills.git",
+      "skillPath": "gomponents/SKILL.md",
+      "skillFolderHash": "7b82eb8ad5d57eb3cb98e750a0b2a49ea2b89b30",
+      "installedAt": "2026-04-17T22:53:36.068Z",
+      "updatedAt": "2026-04-17T22:53:36.068Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "firebender",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp"
+  ]
+}
