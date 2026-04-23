@@ -28,29 +28,83 @@ Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej
 - **Opinion-based preferences**: Style debates without technical impact
 - **Documentation-only changes**: Non-code modifications (comments, README)
 
-## Core Guidelines
-
-### 1. Think Before Coding
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-Before implementing:
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them — don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
-
-### 2. Simplicity First
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-
 ## Implementation Notes
 
 These guidelines are heuristics, not rules. Use professional judgment. The bias toward caution prevents common but hard-to-debug errors, but should not paralyze action on clear, simple tasks.
+
+### Pre-Implementation Checklist
+
+Before writing any code, run through this quick checklist:
+
+- [ ] **Requirements clarity**: Can I state the problem in one sentence?
+- [ ] **Existing solutions**: Have I searched for similar code in the codebase?
+- [ ] **Testability**: How will I verify this works?
+- [ ] **Edge cases**: What are the 2-3 most likely failure modes?
+- [ ] **Dependencies**: What does this depend on? What depends on this?
+- [ ] **Reversibility**: Can this change be easily undone if wrong?
+
+### Surgical Change Protocol
+
+For modifying existing code:
+
+1. **Identify the minimal touch surface** — What's the smallest set of lines that need to change?
+2. **Preserve behavior** — Ensure existing functionality remains intact
+3. **One concern at a time** — Don't mix refactoring with feature changes
+4. **Follow the existing patterns** — Match the codebase style, not your preferences
+5. **Document the why, not the what** — Comments should explain reasoning, not restate code
+
+### Code Review Lens
+
+When reviewing PRs or code changes, apply these filters:
+
+- **Assumption surfacing**: Are hidden assumptions being made?
+- **Scope creep**: Is the change doing more than intended?
+- **Complexity justification**: Is the added complexity necessary?
+- **Alternative consideration**: Were simpler options considered and rejected (with reason)?
+- **Test coverage**: Are edge cases actually tested, not just happy path?
+
+## Common Anti-Patterns
+
+### LLM-Specific Coding Mistakes
+
+- **Hallucinated APIs**: Using library functions that don't exist — verify with docs
+- **Over-engineering**: Creating abstractions for single-use cases
+- **Pattern matching without understanding**: Copying code structure without grasping intent
+- **Silent error swallowing**: Catching exceptions without handling or logging
+- **Type confusion**: Mixing data types without clear boundaries
+- **Magic values**: Hardcoding values that should be parameters or constants
+- **Temporal coupling**: Assuming order of operations without enforcing it
+
+### Red Flags
+
+- "This should work" — indicates lack of verification
+- Multiple nested conditionals (>3 levels) — indicates missing abstraction
+- Comments explaining what code does (not why) — indicates unclear code
+- Functions >50 lines — indicates missing decomposition
+- Duplicate logic — indicates missing extraction
+
+## Workflow Integration
+
+### Combine With These Skills
+
+**Use karpathy guidelines BEFORE:**
+- `test-driven-development` — Write tests first, then minimal code
+- `systematic-debugging` — Understand the problem before fixing
+- `writing-plans` — Plan complex changes thoroughly
+- `requesting-code-review` — Ensure quality before review
+
+**Use karpathy guidelines AFTER:**
+- `subagent-driven-development` — Review generated code for over-engineering
+- `claude-code` / `opencode` / `codex` — Verify autonomous agent output
+
+### Verification Steps
+
+After implementing:
+
+1. **The 5-Minute Rule**: Can you explain what this does and why in 5 minutes?
+2. **The Deletion Test**: If you removed half the code, would it still work?
+3. **The Onboarding Test**: Could a new team member understand this in 10 minutes?
+4. **The Change Test**: If requirements shift slightly, how hard is this to modify?
 
 ## Quality Checks
 
@@ -64,3 +118,12 @@ Before implementing, ask:
 ## Related Context
 
 These guidelines complement the broader agent framework but should not override domain-specific best practices or project conventions.
+
+### When to Override
+
+- **Performance-critical paths**: Sometimes complexity is necessary for speed
+- **Security requirements**: Additional validation/abstraction may be needed
+- **External API constraints**: May require non-idiomatic code
+- **Legacy system integration**: Working within existing constraints
+
+Always document why you're deviating from these guidelines.
